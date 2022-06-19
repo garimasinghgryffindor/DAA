@@ -1,0 +1,1 @@
+int d2 = power(10)
