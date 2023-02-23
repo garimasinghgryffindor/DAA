@@ -1,7 +1,7 @@
 #include <iostream>
+#include <utility>
 #include <vector>
 #include <algorithm>
-#include <utility>
 using namespace std;
 
 // activity selection problem
@@ -21,16 +21,28 @@ int main()
     }
 
     int currentEnd = -1;
+    vector<bool> visited(n,false);
+    int c=n;
     sort(activity.begin(), activity.end());
 
-    for(int i=0 ; i<n ; i++) {
-        if(activity[i].second > currentEnd) {
-            count++;
-            currentEnd = activity[i].first;
-        }
-    }
+    cout<<c<<"  hello    ";
 
-    cout<<"count:  "<<count<<endl;
+    while(c) {
+        for(int i=0 ; i<n ; i++) {
+            if(visited[i])
+                continue;
+            if(activity[i].second > currentEnd) {
+                c--;
+                cout<<c<<"    ";
+                visited[i] = true;
+                currentEnd = activity[i].first;
+            }
+        }
+        count++;
+        currentEnd = -1;
+    }
+    
+    cout<<"\nmin no of processors required:   "<<count<<endl;
 
     return 0;
 }
