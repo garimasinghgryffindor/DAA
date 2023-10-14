@@ -57,3 +57,26 @@ public:
         return -1;
     }
 };
+
+
+class Solution {
+public:
+    // BINARY EXPONENTIAL SEARCH
+    int binarySearch(vector<int>&nums,int l, int r,int&target) {
+        if(l > r) return -1;
+        int mid = l + (r-l)/2;
+        if(nums[mid] == target) return mid;
+        if(nums[mid] < target) return binarySearch(nums, mid+1, r, target);
+        return binarySearch(nums, l,mid-1,target);
+    }
+    int search(vector<int>& nums, int target) {
+        int n = nums.size();
+        
+        int i = 1;
+        while(i < n && nums[i] <= target) {
+            i *= 2;
+        }
+        
+        return binarySearch(nums, i/2, min(i,n-1), target);
+    }
+};
