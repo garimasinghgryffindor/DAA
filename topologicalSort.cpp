@@ -63,3 +63,33 @@ int main()
 
     return 0;
 }
+
+// using vector instead of stack -> and then reversing the vector
+void dfs(vector<int>adj[], vector<int>&res, vector<int>&vis, int pos) {
+    vis[pos] = true;
+    
+    for(int x: adj[pos]) {
+        if(!vis[x]) dfs(adj, res, vis, x);
+    }
+    
+    res.push_back(pos);
+}
+
+vector<int> topoSort(int V, vector<int> adj[]) 
+{
+    // similar to dfs
+    vector<int>vis(V, false);
+    vector<int>res;
+    
+    for(int i = 0; i < V; i++) {
+        if(!vis[i]) {
+            dfs(adj, res, vis, i);
+        }
+    }
+    
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+
+
