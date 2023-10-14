@@ -2,17 +2,24 @@
 vector<int> sortArray(vector<int>& nums) { 
     int n = nums.size();
     vector<int> res(nums.begin(), nums.end());
-    map<int,int>mp;
+    int max_ = *max_element(res.begin(), res.end());
+    int min_ = *min_element(res.begin(), res.end());
+    
+    int n2 = max_ - min_ + 1;
+    vector<int>count(n2, 0);
     for(int x: res) {
-        mp[x]++;
+        int num = x - min_;
+        count[num]++;
     }
     
-    int k = 0;
-    for(auto x: mp) {
-        int num = x.first, freq = x.second;
-        for(int j = 0; j < freq; j++) {
-            res[k++] = num;
-        }
+    for(int i = 1; i < n2; i++) {
+        count[i] = count[i-1] + count[i];
+    }
+    
+    for(int i = n-1; i >= 0; i--) {
+        int posi = count[nums[i]-min_] - 1;
+        res[posi] = nums[i];
+        count[nums[i]-min_]--;
     }
     
     return res;
