@@ -134,3 +134,27 @@ vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     return res;
 }
 
+// USING PRIORITY QUEUE (explicit relaxation)
+vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+    {
+        vector<int>res(V, INT_MAX);
+        
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        pq.push({0,S});
+        res[S] = 0;
+        
+        while(!pq.empty()) {
+            int node = pq.top().second, wt = pq.top().first;
+            pq.pop();
+            
+            for(auto x: adj[node]) {
+                int nd = x[0], w = x[1];
+                // RELAXATION
+                if(res[nd] > wt + w) {
+                    res[nd] = wt + w;
+                    pq.push({wt+w, nd});
+                }
+            }
+        }
+        return res;
+    }
