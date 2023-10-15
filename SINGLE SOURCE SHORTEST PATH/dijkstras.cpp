@@ -110,3 +110,27 @@ int main()
 
     return 0;
 }
+
+
+// using PRIORITY QUEUE
+vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+{
+    vector<int>res(V, INT_MAX);
+    vector<bool>set(V, false);
+    
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+    pq.push({0,S});
+    while(!pq.empty()) {
+        int node = pq.top().second, wt = pq.top().first;
+        pq.pop();
+        if(set[node]) continue;
+        set[node] = true;
+        res[node] = wt;
+        for(auto x: adj[node]) {
+            int nd = x[0], w = x[1];
+            pq.push({wt+w, nd});
+        }
+    }
+    return res;
+}
+
