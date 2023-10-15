@@ -103,3 +103,26 @@ int main()
 
     return 0;
 }
+
+// USING PRIORITY QUEUE
+int spanningTree(int V, vector<vector<int>> adj[])
+{
+    // prims (GREEDY APPROACH)
+    int cost = 0;
+    vector<bool>mst_set(V, false);
+    priority_queue<pair<int,int>, vector<pair<int,int>>,greater<pair<int,int>>>pq;
+    pq.push({0,0});
+    while(!pq.empty()) {
+        int node = pq.top().second, wt = pq.top().first;
+        pq.pop();
+        if(mst_set[node]) continue;
+        mst_set[node] = true;
+        cost += wt;
+        for(auto x: adj[node]) {
+            int nd = x[0], w = x[1];
+            pq.push({w, nd});
+        }
+    }
+    
+    return cost;
+}
