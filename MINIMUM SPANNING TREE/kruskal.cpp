@@ -109,3 +109,54 @@ int main()
     return 0;
 }
 
+
+
+// same
+int find(vector<int>&parent, int x) {
+    if(parent[x] < 0) return x;
+    return find(parent, parent[x]);
+}
+
+void union_(vector<int>&parent, int u, int v) {
+    int pu = find(parent, u), pv = find(parent, v);
+    if(pu != pv) {
+        if(parent[pu] <= parent[pv]) {
+            parent[pu] += parent[pv];
+            parent[pv] = pu;
+        } else {
+            parent[pv] += parent[pu];
+            parent[pu] = pv;
+        }
+    }
+}
+
+//Function to find sum of weights of edges of the Minimum Spanning Tree.
+int spanningTree(int V, vector<vector<int>> adj[])
+{
+    // kruskals (GREEDY APPROACH)
+    vector<pair<int, pair<int,int> > > graph;
+    for(int i = 0; i < V; i++) {
+        for(auto edge: adj[i]) {
+            int u = i, v = edge[0], wt = edge[1];
+            if(u > v) continue;
+            graph.push_back({wt, {u,v}});
+        }
+    }
+    
+    sort(graph.begin(), graph.end());
+    int cost = 0;
+    vector<int>parent(V, -1);
+    
+    for(auto x: graph) {
+        int u = x.second.first, v = x.second.second, wt = x.first;
+        int pu = find(parent, u), pv = find(parent, v);
+        if(pu != pv) {
+            union_(parent, u, v);
+            cost += wt;
+        }
+    }
+    
+    return cost;
+}
+
+
