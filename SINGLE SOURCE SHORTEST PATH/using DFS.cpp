@@ -1,3 +1,4 @@
+// FOR UNWEIGHTED GRAPH
 void dfs(vector<int>adj[],vector<int>&res,vector<bool>&vis, int src, int wt) {
         vis[src] = true;
         
