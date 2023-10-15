@@ -102,3 +102,38 @@ int main()
 
     return 0;
 }
+
+
+// //
+vector<int> bellman_ford(int V, vector<vector<int>>& edges, int S) {
+    // take all the edges
+    // relax them V-1 times
+    vector<int>res(V, INT_MAX);
+    res[S] = 0;
+    
+    for(int i = 0; i < V-1; i++) {
+        for(auto edge: edges) {
+            int u = edge[0], v = edge[1], cost = edge[2];
+            
+            if(res[u] != INT_MAX && res[v] > res[u] + cost) {
+                res[v] = res[u] + cost;
+            }
+        }
+    }
+    
+    for(auto edge: edges) {
+        int u = edge[0], v = edge[1], cost = edge[2];
+        if(res[u] == INT_MAX) continue;
+        if(res[v] > res[u] + cost) {
+            return {-1};
+        }
+    }
+    
+    for(int i = 0; i < V; i++) {
+        if(res[i] == INT_MAX) {
+            res[i] = 100000000;
+        }
+    }
+    
+    return res;
+}
