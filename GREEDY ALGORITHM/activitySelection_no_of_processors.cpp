@@ -73,3 +73,32 @@ int cpuTaskScheduler(int n, vector<vector<int>> arr) {
    return res;
 }
 
+
+// OPTIMAL
+int cpuTaskScheduler(int n, vector<vector<int>> arr) {
+   vector<int>arrival(n),dept(n);
+   for(int i = 0; i < n; i++) {
+      arrival[i] = arr[i][0];
+      dept[i] = arr[i][1];
+   }
+
+   sort(arrival.begin(), arrival.end());
+   sort(dept.begin(), dept.end());
+
+   int res = 1, count = 1;
+   int i = 1, j = 0;
+   while(i < n && j < n) {
+      if(arrival[i] < dept[j]) {
+         count++;
+         i++;
+      } else {
+         count--;
+         j++;
+      }
+      res = max(res, count);
+   }
+   
+   return res;
+   
+}
+
