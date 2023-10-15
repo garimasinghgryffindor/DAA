@@ -1,3 +1,4 @@
+// ONLY FOR UNWEIGHTED GRAPH
 vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
     // using BFS
     vector<int>res(N,INT_MAX);
