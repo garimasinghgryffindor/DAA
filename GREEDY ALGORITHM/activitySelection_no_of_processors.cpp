@@ -46,3 +46,30 @@ int main()
 
     return 0;
 }
+
+
+// using overlapping tasks
+// NAIVE APPROACH
+static bool compare(vector<int>&a, vector<int>&b) {
+   if(a[1] < b[1]) return true;
+   if(a[1] > b[1]) return false;
+   if(a[0] < b[0]) return true;
+   return false;
+}
+int cpuTaskScheduler(int n, vector<vector<int>> arr) {
+   sort(arr.begin(), arr.end(), compare);
+   
+   int res = 0;
+   for(int i = 0; i < n; i++) {
+      int count = 1;
+      for(int j = i+1; j < n; j++) {
+         if((arr[i][0]>arr[j][0] && arr[i][0]<arr[j][1])||(arr[j][0]>arr[i][0] && arr[j][0]<arr[i][1])) {
+            count++;
+         }
+      }
+      res = max(res, count);
+   }
+
+   return res;
+}
+
