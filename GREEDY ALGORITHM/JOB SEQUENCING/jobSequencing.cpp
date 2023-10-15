@@ -44,3 +44,34 @@ int main()
 
     return 0;
 }
+
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+vector<int> JobScheduling(Job arr[], int n) 
+    { 
+        int maxDeadline = -1;
+        int maxProfit = 0;
+        int num = 0;
+        for(int i = 0; i < n; i++) {
+            maxDeadline = max(maxDeadline, arr[i].dead);
+        }
+        
+        sort(arr, arr + n, [](Job a, Job b) { return a.profit > b.profit; });
+        
+        vector<bool>slots(maxDeadline+1, false);
+        for(int i = 0; i < n; i++) {
+            int deadline = arr[i].dead;
+            int pro = arr[i].profit;
+            
+            while(slots[deadline]==true && deadline--);
+
+            if(deadline != 0) {
+                slots[deadline] = true;
+                maxProfit += pro;
+                num++;
+            }
+        }
+        
+        return {num, maxProfit};
+    } 
