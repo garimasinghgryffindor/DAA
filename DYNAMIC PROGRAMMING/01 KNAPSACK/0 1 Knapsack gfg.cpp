@@ -7,7 +7,8 @@ int recur(int W, int wt[], int val[], int i) {
     if(W-wt[i] >= 0) {
         res = max(res, val[i] + recur(W-wt[i], wt, val, i-1));
     }
-    
+
+     // or not
     res = max(res, recur(W, wt, val, i-1));
     return res;
  }
