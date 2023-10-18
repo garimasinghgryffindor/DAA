@@ -48,6 +48,25 @@ int knapSack(int W, int wt[], int val[], int n)
 }
 
 
-
+// TABULATION
+int knapSack(int W, int wt[], int val[], int n) 
+{ 
+  // using tabulation
+  vector<vector<int>> mem(n+1, vector<int>(W+1,0));
+  // setting initial parameters
+  for(int i = 0; i <= W; i++) mem[0][i] = 0;
+  for(int i = 0; i <= n; i++) mem[i][0] = 0;
+  
+  for(int i = 1; i <= n; i++) {
+      for(int j = 0; j <= W; j++) {
+          if(j >= wt[i-1]) {
+              mem[i][j] = val[i-1] + mem[i-1][j-wt[i-1]];
+          }
+          mem[i][j] = max(mem[i][j], mem[i-1][j]);
+      }
+  }
+  
+  return mem[n][W];
+}
 
 
