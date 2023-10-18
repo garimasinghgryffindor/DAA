@@ -30,6 +30,8 @@ int recur(int a[], int i, int n, int prev) {
     }
     
     res = max(res, recur(a, i+1, n, prev));
+
+    return res;
 }
 
 int longestSubsequence(int n, int a[])
