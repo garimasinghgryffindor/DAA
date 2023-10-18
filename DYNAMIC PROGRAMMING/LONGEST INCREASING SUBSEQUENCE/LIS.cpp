@@ -18,3 +18,21 @@ public:
     }
 };
 
+
+// using RECURSION
+int recur(int a[], int i, int n, int prev) {
+    if(i == n) return 0;
+    
+    int res = 0;
+    // either i will take it
+    if(a[i] > prev) {
+        res = 1 + recur(a, i+1, n, a[i]);
+    }
+    
+    res = max(res, recur(a, i+1, n, prev));
+}
+
+int longestSubsequence(int n, int a[])
+{
+    return recur(a, 0, n , -1);
+}
