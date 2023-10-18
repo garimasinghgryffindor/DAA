@@ -62,3 +62,25 @@ int main()
 
     return 0;
 }
+
+
+// using MEMOIZATION
+int recur(vector<vector<int>>&mem, int arr[], int i, int j) {
+    if(mem[i][j] != -1) return mem[i][j];
+    
+    if(i == j) return 0;
+    
+    int mn = INT_MAX;
+    for(int k = i; k < j; k++) {
+        int temp = arr[i-1]*arr[k]*arr[j];
+        mn = min(mn, temp + recur(mem,arr,i,k) + recur(mem,arr, k+1, j));
+    }
+    
+    return mem[i][j] = mn;
+}
+
+int matrixMultiplication(int N, int arr[])
+{
+    vector<vector<int>>mem(N, vector<int>(N, -1));
+    return recur(mem, arr, 1, N-1);
+}
